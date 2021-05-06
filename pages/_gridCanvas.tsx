@@ -16,7 +16,10 @@ interface GridCanvasState {
   cellWidth: number;
 }
 
-export class GridCanvas extends React.Component<GridCanvasProps, GridCanvasState> {
+export class GridCanvas extends React.Component<
+  GridCanvasProps,
+  GridCanvasState
+> {
   canvasRef: React.MutableRefObject<HTMLCanvasElement>;
 
   constructor(props: GridCanvasProps) {
@@ -30,13 +33,12 @@ export class GridCanvas extends React.Component<GridCanvasProps, GridCanvasState
   }
 
   static getDerivedStateFromProps(props: GridCanvasProps) {
-  return {
+    return {
       rows: props.rows,
       columns: props.columns,
       // textBoxes: props.textBoxes,
     };
-}
-
+  }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     console.log("GridCanvas componentDidUpdate");
@@ -53,8 +55,7 @@ export class GridCanvas extends React.Component<GridCanvasProps, GridCanvasState
   }
 
   drawGrid() {
-
-    const ctx = this.canvasRef.current.getContext('2d');
+    const ctx = this.canvasRef.current.getContext("2d");
 
     const width = this.state.cellWidth * this.state.columns;
     const height = this.state.cellHeight * this.state.rows;
@@ -63,8 +64,13 @@ export class GridCanvas extends React.Component<GridCanvasProps, GridCanvasState
 
     for (let i = 0; i < this.state.rows; i++) {
       for (let j = 0; j < this.state.columns; j++) {
-        ctx.fillStyle = 'rgba(255, 255, 255, '+Math.random()+')';
-        ctx.fillRect(i*this.state.cellWidth, j*this.state.cellHeight, this.state.cellWidth, this.state.cellHeight);
+        ctx.fillStyle = "rgba(255, 255, 255, " + Math.random() + ")";
+        ctx.fillRect(
+          i * this.state.cellWidth,
+          j * this.state.cellHeight,
+          this.state.cellWidth,
+          this.state.cellHeight
+        );
       }
     }
 
@@ -79,11 +85,10 @@ export class GridCanvas extends React.Component<GridCanvasProps, GridCanvasState
     //     ctx.fillText(line, ea.offsetX, ea.offsetY + index * 50);
     //   });
     // })
-
   }
 
   componentDidMount() {
-    this.drawGrid()
+    this.drawGrid();
   }
 
   render(): JSX.Element {
@@ -97,33 +102,27 @@ export class GridCanvas extends React.Component<GridCanvasProps, GridCanvasState
             cellWidth={this.state.cellWidth}
             row={i}
             column={j}
-            key={"cell-"+i+"-"+j}
+            key={"cell-" + i + "-" + j}
           />
-        )
+        );
       }
     }
 
     return (
       <div>
         <div>
-          <div>
-            {
-              elements
-            }
-          </div>
+          <div>{elements}</div>
 
           <canvas
-            style={{ "display": "block" }}
+            style={{ display: "block" }}
             width={this.state.cellWidth * this.state.columns}
             height={this.state.cellHeight * this.state.rows}
             ref={this.canvasRef}
           />
-          <div>
-
-          </div>
+          <div></div>
         </div>
       </div>
-    )
+    );
   }
 }
 
@@ -152,19 +151,18 @@ export class Cell extends React.Component<CellProps, CellState> {
 
   render(): JSX.Element {
     return (
-      <div className="cell" style={
-        {
+      <div
+        className="cell"
+        style={{
           width: this.state.cellWidth,
           height: this.state.cellHeight,
-          position: 'absolute',
+          position: "absolute",
           marginTop: this.state.row * this.state.cellHeight,
           marginLeft: this.state.column * this.state.cellWidth,
-        }}>
-        <p className="cell-controls">
-          text
-        </p>
+        }}
+      >
+        <p className="cell-controls">text</p>
       </div>
-
-    )
+    );
   }
 }

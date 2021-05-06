@@ -1,5 +1,5 @@
 import React from "react";
-import {GridCanvas} from "./_gridCanvas";
+import { GridCanvas } from "./_gridCanvas";
 
 interface HomeProps {}
 interface HomeState {
@@ -17,7 +17,7 @@ class Griddy extends React.Component<HomeProps, HomeState> {
     this.state = {
       numRows: 3,
       numColumns: 2,
-    }
+    };
   }
 
   // pickTemplate()
@@ -38,7 +38,7 @@ class Griddy extends React.Component<HomeProps, HomeState> {
                 name="numRows"
                 defaultValue={this.state.numRows}
                 onChange={(e) => {
-                  console.log(e.target.value)
+                  console.log(e.target.value);
                   this.setState({ numRows: parseInt(e.target.value) });
                 }}
               />
@@ -49,7 +49,7 @@ class Griddy extends React.Component<HomeProps, HomeState> {
                 name="numColumns"
                 defaultValue={this.state.numColumns}
                 onChange={(e) => {
-                  console.log(e.target.value)
+                  console.log(e.target.value);
                   this.setState({ numColumns: parseInt(e.target.value) });
                 }}
               />
@@ -65,6 +65,6 @@ class Griddy extends React.Component<HomeProps, HomeState> {
       </div>
     );
   }
-};
+}
 
 export default Griddy;

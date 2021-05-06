@@ -18,7 +18,7 @@ body {
     background: none;
     border: none;
     font-size: 1em;
-    padding-bottom: .5em;
+    padding-bottom: 0.5em;
     border-bottom: 2px solid #ccc;
     text-align: center;
     outline: none;
@@ -31,16 +31,16 @@ body {
     font-size: 1em;
   }
   &__label {
-     display: block;
-    font-size: .8em;
-    padding-top: .3em;
+    display: block;
+    font-size: 0.8em;
+    padding-top: 0.3em;
     margin-bottom: 2em;
   }
 }
 canvas {
   background-color: #eee;
   // opacity: 0;
-  transition: opacity .3s;
+  transition: opacity 0.3s;
   &.show {
     opacity: 1;
   }
