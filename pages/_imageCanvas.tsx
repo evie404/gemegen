@@ -100,8 +100,36 @@ class ImageCanvas extends React.Component<ImageCanvasProps, ImageCanvasState> {
   render(): JSX.Element {
     return (
       <div>
-        <img src={this.state.imageSrc} ref={this.imageRef} style={{display:'none'}} />
-        <canvas style={{ "display": "block" }} width={this.state.width} height={this.state.height} ref={this.canvasRef}/>
+        <div>
+          {
+            this.state.textBoxes.map((value: TextBox, index: number) => {
+              return (
+                <div>
+                  <input
+                      className="controls__input"
+                      id="name"
+                      type="text"
+                      // defaultValue={this.state.}
+                  onChange={(e) => {
+                    const textBoxes = this.state.textBoxes;
+                    textBoxes[index].text = e.target.value
+                        // console.log(e)
+                        // console.log(e.target)
+                        // console.log(e.target.value)
+                        this.setState({ textBoxes: textBoxes })
+                      }}
+                    />
+                <label className="controls__label" htmlFor="name">Overlay Text</label>
+                </div>
+              )
+            })
+          }
+
+        </div>
+        <div>
+          <img src={this.state.imageSrc} ref={this.imageRef} style={{display:'none'}} />
+          <canvas style={{ "display": "block" }} width={this.state.width} height={this.state.height} ref={this.canvasRef}/>
+        </div>
       </div>
     )
   }
