@@ -49,8 +49,21 @@ export class GridCanvas extends React.Component<GridCanvasProps, GridCanvasState
   }
 
   drawGrid() {
-    // const ctx = this.canvasRef.current.getContext('2d');
-    // ctx.clearRect(0, 0, this.state.width, this.state.height);
+
+    const ctx = this.canvasRef.current.getContext('2d');
+
+    const width = this.state.cellWidth * this.state.columns;
+    const height = this.state.cellHeight * this.state.rows;
+
+    ctx.clearRect(0, 0, width, height);
+
+    for (let i = 0; i < this.state.rows; i++) {
+      for (let j = 0; j < this.state.columns; j++) {
+        ctx.fillStyle = 'rgba(255, 255, 255, '+Math.random()+')';
+        ctx.fillRect(i*this.state.cellWidth, j*this.state.cellHeight, this.state.cellWidth, this.state.cellHeight);
+      }
+    }
+
     // DrawOverlay(ctx, this.imageRef.current, this.state.width, this.state.height);
 
     // this.state.textBoxes.forEach((ea) => {
