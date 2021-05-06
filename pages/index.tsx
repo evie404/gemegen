@@ -60,36 +60,56 @@ interface ImageCanvasState {
 }
 
 class ImageCanvas extends React.Component<ImageCanvasProps, ImageCanvasState> {
-  canvasRef: React.MutableRefObject<HTMLCanvasElement>;
-  imageRef: React.MutableRefObject<HTMLImageElement>;
+  // canvasRef: React.MutableRefObject<HTMLCanvasElement>;
+  // imageRef: React.MutableRefObject<HTMLImageElement>;
 
   constructor(props: ImageCanvasProps) {
     super(props);
 
-    this.state = {
+    // this.state = {
+    //   image: props.image,
+    //   width: props.width,
+    //   height: props.height,
+    //   text: props.text,
+    // };
+
+    // this.canvasRef = React.createRef();
+    // this.imageRef = React.createRef();
+  }
+
+  componentWillReceiveProps(props: ImageCanvasProps) {
+  this.setState({
       image: props.image,
       width: props.width,
       height: props.height,
       text: props.text,
-    };
+    });
+}
 
-    this.canvasRef = React.createRef();
-    this.imageRef = React.createRef();
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    console.log("ImageCanvas componentDidUpdate");
+    console.log(prevProps);
+    console.log(prevState);
+    console.log(snapshot);
+    console.log(this.state);
   }
 
-  componentDidMount() {
-    const ctx = this.canvasRef.current.getContext('2d');
-    ctx.clearRect(0, 0, this.state.width, this.state.height);
-    // DrawOverlay(ctx, this.imageRef.current, this.state.width, this.state.height);
-    DrawText(ctx, this.state.text);
-    ctx.fillText(this.state.text, 50, 50);
-  }
+  // componentDidMount() {
+  //   const ctx = this.canvasRef.current.getContext('2d');
+  //   ctx.clearRect(0, 0, this.state.width, this.state.height);
+  //   // DrawOverlay(ctx, this.imageRef.current, this.state.width, this.state.height);
+  //   DrawText(ctx, this.state.text);
+  //   ctx.fillText(this.state.text, 50, 50);
+  // }
 
   render(): JSX.Element {
     return (
       <div>
         {/* <img ref={this.imageRef} /> */}
-        <canvas style={{ "display": "block" }} width={this.state.width} height={this.state.height} ref={this.canvasRef}/>
+        <h3>Dynamic text:</h3>
+        <p>{this.state ? this.state.text : ""}</p>
+        {/* <canvas style={{ "display": "block" }} width={this.state.width} height={this.state.height} ref={this.canvasRef}/> */}
       </div>
     )
   }
@@ -121,6 +141,7 @@ interface HomeProps {}
 
 interface HomeState {
   image: React.DetailedHTMLProps<React.ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement>;
+  parentText: string,
 }
 
 // templates -> image, [text positions]
@@ -131,8 +152,17 @@ class Home extends React.Component<HomeProps, HomeState> {
     super(props);
 
     this.state = {
-      image: <img src="https://unsplash.it/400/400/?random"/>,
+      image: <img src="https://unsplash.it/400/400/?random" />,
+      parentText: 'text',
     }
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    // console.log("Home componentDidUpdate");
+    // console.log(prevProps);
+    // console.log(prevState);
+    // console.log(snapshot);
+    // console.log(this.state);
   }
 
   render(): JSX.Element {
@@ -143,12 +173,26 @@ class Home extends React.Component<HomeProps, HomeState> {
           <div className="controls">
             <input className="controls__input" type="file" id="imageLoader" name="imageLoader" />
             <label className="controls__label" htmlFor="name">First, choose an image.</label>
-
-            <input className="controls__input" id="name" type="text" defaultValue="test" />
+            <hr></hr>
+            <p>I like Sophie and memes</p>
+            <p>Parent element: {this.state.parentText}</p>
+            <input
+              className="controls__input"
+              id="name"
+              type="text"
+              defaultValue={this.state.parentText}
+              onChange={(e) => {
+                // console.log(e)
+                // console.log(e.target)
+                // console.log(e.target.value)
+                this.setState({ parentText: e.target.value })
+              }}
+            />
             <label className="controls__label" htmlFor="name">Overlay Text</label>
           </div>
           <div id="canvas-wrap">
-            <ImageCanvas image={this.state.image} width={400} height={400} text="test"/>
+            <ImageCanvas image={this.state.image} width={400} height={400} text={this.state.parentText} />
+            {/* <ImageCanvas image={this.state.image} width={400} height={400} text={this.state.parentText}/> */}
           </div>
         </div>
       </div>
