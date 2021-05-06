@@ -60,20 +60,21 @@ interface ImageCanvasState {
 }
 
 class ImageCanvas extends React.Component<ImageCanvasProps, ImageCanvasState> {
-  // canvasRef: React.MutableRefObject<HTMLCanvasElement>;
+  canvasRef: React.MutableRefObject<HTMLCanvasElement>;
   // imageRef: React.MutableRefObject<HTMLImageElement>;
 
   constructor(props: ImageCanvasProps) {
     super(props);
 
-    // this.state = {
-    //   image: props.image,
-    //   width: props.width,
-    //   height: props.height,
-    //   text: props.text,
-    // };
 
-    // this.canvasRef = React.createRef();
+    this.state = {
+      image: null,
+      width: 400,
+      height: 400,
+      text: "",
+    };
+
+    this.canvasRef = React.createRef();
     // this.imageRef = React.createRef();
   }
 
@@ -93,15 +94,21 @@ class ImageCanvas extends React.Component<ImageCanvasProps, ImageCanvasState> {
     console.log(prevState);
     console.log(snapshot);
     console.log(this.state);
+
+    this.drawText();
   }
 
-  // componentDidMount() {
-  //   const ctx = this.canvasRef.current.getContext('2d');
-  //   ctx.clearRect(0, 0, this.state.width, this.state.height);
-  //   // DrawOverlay(ctx, this.imageRef.current, this.state.width, this.state.height);
-  //   DrawText(ctx, this.state.text);
-  //   ctx.fillText(this.state.text, 50, 50);
-  // }
+  drawText() {
+    const ctx = this.canvasRef.current.getContext('2d');
+    ctx.clearRect(0, 0, this.state.width, this.state.height);
+    // DrawOverlay(ctx, this.imageRef.current, this.state.width, this.state.height);
+    DrawText(ctx, this.state.text);
+    ctx.fillText(this.state.text, 50, 50);
+  }
+
+  componentDidMount() {
+    this.drawText()
+  }
 
   render(): JSX.Element {
     return (
@@ -109,7 +116,7 @@ class ImageCanvas extends React.Component<ImageCanvasProps, ImageCanvasState> {
         {/* <img ref={this.imageRef} /> */}
         <h3>Dynamic text:</h3>
         <p>{this.state ? this.state.text : ""}</p>
-        {/* <canvas style={{ "display": "block" }} width={this.state.width} height={this.state.height} ref={this.canvasRef}/> */}
+        <canvas style={{ "display": "block" }} width={this.state.width} height={this.state.height} ref={this.canvasRef}/>
       </div>
     )
   }
