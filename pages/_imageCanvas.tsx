@@ -45,12 +45,12 @@ class ImageCanvas extends React.Component<ImageCanvasProps, ImageCanvasState> {
       height: 695,
       textBoxes: [{
         text: "topText",
-        offsetX: 300,
-        offsetY: 0,
+        offsetX: 455,
+        offsetY: 109,
       },{
         text: "bottomText",
-        offsetX: 300,
-        offsetY: 400,
+        offsetX: 411,
+        offsetY: 475,
       }],
       imageSrc: "/2srcf5.jpg",
     };
@@ -107,12 +107,34 @@ class ImageCanvas extends React.Component<ImageCanvasProps, ImageCanvasState> {
                 <div>
                   <input
                     className="controls__input"
-                    id="name"
+                    // id="name"
                     type="text"
                     defaultValue={value.text}
                     onChange={(e) => {
                       const textBoxes = this.state.textBoxes;
                       textBoxes[index].text = e.target.value;
+                      this.setState({ textBoxes: textBoxes });
+                    }}
+                  />
+                  <input
+                    className="controls__input"
+                    // id="name"
+                    type="number"
+                    defaultValue={value.offsetX}
+                    onChange={(e) => {
+                      const textBoxes = this.state.textBoxes;
+                      textBoxes[index].offsetX = parseInt(e.target.value);
+                      this.setState({ textBoxes: textBoxes });
+                    }}
+                  />
+                  <input
+                    className="controls__input"
+                    // id="name"
+                    type="number"
+                    defaultValue={value.offsetY}
+                    onChange={(e) => {
+                      const textBoxes = this.state.textBoxes;
+                      textBoxes[index].offsetY = parseInt(e.target.value);
                       this.setState({ textBoxes: textBoxes });
                     }}
                   />
