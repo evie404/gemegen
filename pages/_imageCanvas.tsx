@@ -1,49 +1,17 @@
 import React from "react";
 
-console.log("i loaded")
-
-// var text_title ="Overlay text";
-// var imageLoader = document.getElementById('imageLoader');
-//     imageLoader.addEventListener('change', handleImage, false);
-// var canvas = document.getElementById('imageCanvas');
-// var ctx = canvas.getContext('2d');
-
-function DrawOverlay(ctx: CanvasRenderingContext2D, img, width, height) {
+function DrawOverlay(ctx: CanvasRenderingContext2D, img: CanvasImageSource, width: number, height: number) {
     ctx.drawImage(img,0,0);
     ctx.fillStyle = 'rgba(255, 255, 255, 0)';
     ctx.fillRect(0, 0, width, height);
 }
-function DrawText(ctx: CanvasRenderingContext2D, text) {
+
+function DrawText(ctx: CanvasRenderingContext2D, text: string) {
     ctx.fillStyle = "white";
     ctx.textBaseline = 'middle';
     ctx.font = "50px 'Montserrat'";
     ctx.fillText(text, 50, 50);
 }
-// function handleImage(e) {
-//     var reader = new FileReader();
-//     var img = "";
-//     var src = "";
-//     reader.onload = function(event) {
-//         img = new Image();
-//         img.onload = function() {
-//             canvas.width = img.width;
-//             canvas.height = img.height;
-//             ctx.drawImage(img,0,0);
-//         }
-//         img.src = event.target.result;
-//         src = event.target.result;
-//         canvas.classList.add("show");
-//         DynamicText(img);
-//     }
-
-//     reader.readAsDataURL(e.target.files[0]);
-// }
-// function convertToImage() {
-// 	window.open(canvas.toDataURL('png'));
-// }
-// document.getElementById('download').onclick = function download() {
-// 		convertToImage();
-// }
 
 interface ImageCanvasProps {
   image: React.DetailedHTMLProps<React.ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement>;
@@ -62,9 +30,6 @@ interface ImageCanvasState {
 
   canvasRef?: React.MutableRefObject<HTMLCanvasElement>;
 }
-
-// const obj = {hello: 'world'};
-// const blob = new Blob([JSON.stringify(obj, null, 2)], {type : 'application/json'});
 
 class ImageCanvas extends React.Component<ImageCanvasProps, ImageCanvasState> {
   canvasRef: React.MutableRefObject<HTMLCanvasElement>;
@@ -127,28 +92,6 @@ class ImageCanvas extends React.Component<ImageCanvasProps, ImageCanvasState> {
         <canvas style={{ "display": "block" }} width={this.state.width} height={this.state.height} ref={this.canvasRef}/>
       </div>
     )
-  }
-}
-
-interface ImageRefProps {
-  image: React.DetailedHTMLProps<React.ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement>;
-}
-
-class ImageRef extends React.Component<ImageRefProps> {
-  imageRef: React.MutableRefObject<HTMLImageElement>;
-
-  constructor(props: ImageRefProps) {
-    super(props);
-
-    this.state = {
-      image: props.image,
-    };
-
-    this.imageRef = React.createRef();
-  }
-
-  render(): JSX.Element {
-    return <img ref={this.imageRef} />;
   }
 }
 
