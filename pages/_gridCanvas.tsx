@@ -22,26 +22,30 @@ export class GridCanvas extends React.Component<GridCanvasProps, GridCanvasState
   constructor(props: GridCanvasProps) {
     super(props);
 
-    this.state = props;
+    this.state = {
+      ...props,
+    };
 
     this.canvasRef = React.createRef();
   }
 
-  componentWillReceiveProps(props: GridCanvasProps) {
-  this.setState({
+  static getDerivedStateFromProps(props: GridCanvasProps) {
+  return {
       rows: props.rows,
       columns: props.columns,
       // textBoxes: props.textBoxes,
-    });
+    };
 }
 
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     console.log("GridCanvas componentDidUpdate");
-    // console.log(prevProps);
+    console.log("prevProps");
+    console.log(prevProps);
     console.log("prevState");
     console.log(prevState);
-    // console.log(snapshot);
+    console.log("snapshot");
+    console.log(snapshot);
     console.log("this.state");
     console.log(this.state);
 
@@ -93,6 +97,7 @@ export class GridCanvas extends React.Component<GridCanvasProps, GridCanvasState
             cellWidth={this.state.cellWidth}
             row={i}
             column={j}
+            key={"cell-"+i+"-"+j}
           />
         )
       }
@@ -142,7 +147,7 @@ export class Cell extends React.Component<CellProps, CellState> {
   constructor(props: CellProps) {
     super(props);
 
-    this.state = props; // TODO: fix this
+    this.state = { ...props }; // TODO: fix this
   }
 
   render(): JSX.Element {

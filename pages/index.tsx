@@ -32,7 +32,7 @@ class Home extends React.Component<HomeProps, HomeState> {
             {
               DefaultMemeTemplates.map((ea, index) => {
                 return (
-                  <div>
+                  <div key={"meme-selector-"+index}>
                     <input type="radio" id={ea.name} name="template" value={index}
                       onChange={(e) => {
                         console.log(e.target.value)
@@ -50,7 +50,7 @@ class Home extends React.Component<HomeProps, HomeState> {
             {
               DefaultMemeTemplates.map((ea, index) => {
                 return (
-                  <div style={{ display: this.state.templateIndex === index ? 'block' : 'none' }}>
+                  <div style={{ display: this.state.templateIndex === index ? 'block' : 'none' }} key={"image-canvas-container-"+index}>
                     <ImageCanvas {...ea} />
                   </div>
                 )

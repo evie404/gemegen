@@ -85,20 +85,18 @@ export class ImageCanvas extends React.Component<ImageCanvasProps, ImageCanvasSt
   constructor(props: ImageCanvasProps) {
     super(props);
 
-    this.state = props;
+    this.state = { ...props };
 
     this.canvasRef = React.createRef();
     this.imageRef = React.createRef();
   }
 
-  componentWillReceiveProps(props: ImageCanvasProps) {
-  this.setState({
-      width: props.width,
+    static getDerivedStateFromProps(props: ImageCanvasProps) {
+    return {
+        width: props.width,
       height: props.height,
-      // textBoxes: props.textBoxes,
-    });
-}
-
+      };
+  }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     console.log("ImageCanvas componentDidUpdate");
@@ -140,7 +138,7 @@ export class ImageCanvas extends React.Component<ImageCanvasProps, ImageCanvasSt
           {
             this.state.textBoxes.map((value: TextBox, index: number) => {
               return (
-                <div>
+                <div key={"text-box-control-"+index}>
                   {/* <label className="controls__label" htmlFor="name">Overlay Text</label> */}
                   <textarea
                     className="controls__input"
