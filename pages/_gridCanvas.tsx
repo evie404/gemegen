@@ -83,16 +83,79 @@ export class GridCanvas extends React.Component<GridCanvasProps, GridCanvasState
   }
 
   render(): JSX.Element {
+    const elements = [];
+
+    for (let i = 0; i < this.state.rows; i++) {
+      for (let j = 0; j < this.state.columns; j++) {
+        elements.push(
+          <Cell
+            cellHeight={this.state.cellHeight}
+            cellWidth={this.state.cellWidth}
+            row={i}
+            column={j}
+          />
+        )
+      }
+    }
+
     return (
       <div>
         <div>
+          <div>
+            {
+              elements
+            }
+          </div>
+
           <canvas
             style={{ "display": "block" }}
             width={this.state.cellWidth * this.state.columns}
             height={this.state.cellHeight * this.state.rows}
             ref={this.canvasRef}
           />
+          <div>
+
+          </div>
         </div>
+      </div>
+    )
+  }
+}
+
+interface CellProps {
+  row: number;
+  column: number;
+
+  cellHeight: number;
+  cellWidth: number;
+}
+
+interface CellState {
+  row: number;
+  column: number;
+
+  cellHeight: number;
+  cellWidth: number;
+}
+
+export class Cell extends React.Component<CellProps, CellState> {
+  constructor(props: CellProps) {
+    super(props);
+
+    this.state = props; // TODO: fix this
+  }
+
+  render(): JSX.Element {
+    return (
+      <div style={
+        {
+          backgroundColor: 'red',
+          width: this.state.cellWidth / 2,
+          height: this.state.cellHeight / 2,
+          position: 'absolute',
+          marginTop: this.state.row * this.state.cellHeight,
+          marginLeft: this.state.column * this.state.cellWidth,
+        }}>
       </div>
     )
   }
