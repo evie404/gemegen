@@ -64,7 +64,7 @@ class ImageCanvas extends React.Component<ImageCanvasProps, ImageCanvasState> {
       image: props.image,
       width: props.width,
       height: props.height,
-      textBoxes: props.textBoxes,
+      // textBoxes: props.textBoxes,
     });
 }
 
@@ -101,9 +101,6 @@ class ImageCanvas extends React.Component<ImageCanvasProps, ImageCanvasState> {
     return (
       <div>
         <img src={this.state.imageSrc} ref={this.imageRef} style={{display:'none'}} />
-        {/* {this.state.image.ref = } */}
-        <h3>Dynamic text:</h3>
-        <p>{this.state ? this.state.text : ""}</p>
         <canvas style={{ "display": "block" }} width={this.state.width} height={this.state.height} ref={this.canvasRef}/>
       </div>
     )
