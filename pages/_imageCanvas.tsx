@@ -88,7 +88,10 @@ class ImageCanvas extends React.Component<ImageCanvasProps, ImageCanvasState> {
       ctx.fillStyle = "pink";
       ctx.textBaseline = 'middle';
       ctx.font = "50px 'Montserrat'";
-      ctx.fillText(ea.text, ea.offsetX, ea.offsetY);
+
+      ea.text.split("\n").forEach((line: string, index: number) => {
+        ctx.fillText(line, ea.offsetX, ea.offsetY + index * 50);
+      });
     })
 
   }
@@ -105,10 +108,10 @@ class ImageCanvas extends React.Component<ImageCanvasProps, ImageCanvasState> {
             this.state.textBoxes.map((value: TextBox, index: number) => {
               return (
                 <div>
-                  <input
+                  <textarea
                     className="controls__input"
                     // id="name"
-                    type="text"
+                    // type="text"
                     defaultValue={value.text}
                     onChange={(e) => {
                       const textBoxes = this.state.textBoxes;
