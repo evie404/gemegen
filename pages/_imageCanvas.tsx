@@ -7,23 +7,9 @@ function DrawOverlay(ctx: CanvasRenderingContext2D, img: CanvasImageSource, widt
 }
 
 
-interface ImageCanvasProps {
-  image: React.DetailedHTMLProps<React.ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement>;
-  width: number;
-  height: number;
-  imageSrc: string;
-  textBoxes: TextBox[];
-}
+interface ImageCanvasProps extends MemeTemplate {}
 
-interface ImageCanvasState {
-  image: React.DetailedHTMLProps<React.ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement>;
-  width: number;
-  height: number;
-  imageSrc: string;
-  textBoxes: TextBox[];
-
-  canvasRef?: React.MutableRefObject<HTMLCanvasElement>;
-}
+interface ImageCanvasState extends MemeTemplate {}
 
 interface TextBox {
   text: string;
@@ -32,6 +18,33 @@ interface TextBox {
   // TODO: color
 }
 
+interface MemeTemplate {
+  imageSrc: string
+  textBoxes: TextBox[]
+
+  // TODO
+  width: number
+  height: number
+}
+
+
+const defaultMemeTemplates = [
+  {
+    width: 720, // TODO: dynamic size from image
+    height: 695,
+    textBoxes: [{
+      text: "NYET",
+      offsetX: 450,
+      offsetY: 175,
+    },{
+      text: "DA",
+      offsetX: 450,
+      offsetY: 525,
+    }],
+    imageSrc: "/2srcf5.jpg",
+  }
+]
+
 class ImageCanvas extends React.Component<ImageCanvasProps, ImageCanvasState> {
   canvasRef: React.MutableRefObject<HTMLCanvasElement>;
   imageRef: React.MutableRefObject<HTMLImageElement>;
@@ -39,21 +52,7 @@ class ImageCanvas extends React.Component<ImageCanvasProps, ImageCanvasState> {
   constructor(props: ImageCanvasProps) {
     super(props);
 
-    this.state = {
-      image: props.image,
-      width: 720, // TODO: dynamic size from image
-      height: 695,
-      textBoxes: [{
-        text: "NYET",
-        offsetX: 450,
-        offsetY: 175,
-      },{
-        text: "DA",
-        offsetX: 450,
-        offsetY: 525,
-      }],
-      imageSrc: "/2srcf5.jpg",
-    };
+    this.state = defaultMemeTemplates[0];
 
     this.canvasRef = React.createRef();
     this.imageRef = React.createRef();
@@ -61,7 +60,6 @@ class ImageCanvas extends React.Component<ImageCanvasProps, ImageCanvasState> {
 
   componentWillReceiveProps(props: ImageCanvasProps) {
   this.setState({
-      image: props.image,
       width: props.width,
       height: props.height,
       // textBoxes: props.textBoxes,
