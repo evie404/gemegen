@@ -44,13 +44,13 @@ class ImageCanvas extends React.Component<ImageCanvasProps, ImageCanvasState> {
       width: 720, // TODO: dynamic size from image
       height: 695,
       textBoxes: [{
-        text: "topText",
-        offsetX: 455,
-        offsetY: 109,
+        text: "NYET",
+        offsetX: 450,
+        offsetY: 175,
       },{
-        text: "bottomText",
-        offsetX: 411,
-        offsetY: 475,
+        text: "DA",
+        offsetX: 450,
+        offsetY: 525,
       }],
       imageSrc: "/2srcf5.jpg",
     };
@@ -85,7 +85,7 @@ class ImageCanvas extends React.Component<ImageCanvasProps, ImageCanvasState> {
     DrawOverlay(ctx, this.imageRef.current, this.state.width, this.state.height);
 
     this.state.textBoxes.forEach((ea) => {
-      ctx.fillStyle = "pink";
+      ctx.fillStyle = "black"; // TODO: pick color
       ctx.textBaseline = 'middle';
       ctx.font = "50px 'Montserrat'";
 
