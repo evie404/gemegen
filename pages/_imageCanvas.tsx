@@ -108,6 +108,7 @@ class ImageCanvas extends React.Component<ImageCanvasProps, ImageCanvasState> {
             this.state.textBoxes.map((value: TextBox, index: number) => {
               return (
                 <div>
+                  {/* <label className="controls__label" htmlFor="name">Overlay Text</label> */}
                   <textarea
                     className="controls__input"
                     // id="name"
@@ -141,7 +142,6 @@ class ImageCanvas extends React.Component<ImageCanvasProps, ImageCanvasState> {
                       this.setState({ textBoxes: textBoxes });
                     }}
                   />
-                  <label className="controls__label" htmlFor="name">Overlay Text</label>
                 </div>
               )
             })
