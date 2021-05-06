@@ -10,7 +10,7 @@ console.log("i loaded")
 
 function DrawOverlay(ctx: CanvasRenderingContext2D, img, width, height) {
     ctx.drawImage(img,0,0);
-    ctx.fillStyle = 'rgba(30, 144, 255, 0.4)';
+    ctx.fillStyle = 'rgba(255, 255, 255, 0)';
     ctx.fillRect(0, 0, width, height);
 }
 function DrawText(ctx: CanvasRenderingContext2D, text) {
@@ -75,8 +75,8 @@ class ImageCanvas extends React.Component<ImageCanvasProps, ImageCanvasState> {
 
     this.state = {
       image: props.image,
-      width: 400,
-      height: 400,
+      width: 720, // TODO: dynamic size from image
+      height: 695,
       text: "",
       imageSrc: "/2srcf5.jpg",
     };
@@ -120,7 +120,7 @@ class ImageCanvas extends React.Component<ImageCanvasProps, ImageCanvasState> {
   render(): JSX.Element {
     return (
       <div>
-        <img src={this.state.imageSrc} ref={this.imageRef} />
+        <img src={this.state.imageSrc} ref={this.imageRef} style={{display:'none'}} />
         {/* {this.state.image.ref = } */}
         <h3>Dynamic text:</h3>
         <p>{this.state ? this.state.text : ""}</p>

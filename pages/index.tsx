@@ -56,7 +56,7 @@ class Home extends React.Component<HomeProps, HomeState> {
           </div>
           <div id="canvas-wrap">
             {/* <DynamicImageCanvas image={this.state.image} width={400} height={400} text={this.state.parentText} /> */}
-            <ImageCanvas image={this.state.image} width={400} height={400} text={this.state.parentText}/>
+            <ImageCanvas image={this.state.image} width={720} height={695} text={this.state.parentText}/>
           </div>
         </div>
       </div>
