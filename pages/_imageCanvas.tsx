@@ -18,7 +18,7 @@ interface TextBox {
   // TODO: color
 }
 
-interface MemeTemplate {
+export interface MemeTemplate {
   imageSrc: string
   textBoxes: TextBox[]
 
@@ -28,7 +28,7 @@ interface MemeTemplate {
 }
 
 
-const defaultMemeTemplates = [
+export const DefaultMemeTemplates = [
   {
     width: 720, // TODO: dynamic size from image
     height: 695,
@@ -73,14 +73,14 @@ const defaultMemeTemplates = [
   },
 ]
 
-class ImageCanvas extends React.Component<ImageCanvasProps, ImageCanvasState> {
+export class ImageCanvas extends React.Component<ImageCanvasProps, ImageCanvasState> {
   canvasRef: React.MutableRefObject<HTMLCanvasElement>;
   imageRef: React.MutableRefObject<HTMLImageElement>;
 
   constructor(props: ImageCanvasProps) {
     super(props);
 
-    this.state = defaultMemeTemplates[2];
+    this.state = props;
 
     this.canvasRef = React.createRef();
     this.imageRef = React.createRef();
@@ -183,4 +183,4 @@ class ImageCanvas extends React.Component<ImageCanvasProps, ImageCanvasState> {
   }
 }
 
-export default ImageCanvas;
+// export default ImageCanvas;

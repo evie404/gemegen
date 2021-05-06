@@ -1,5 +1,5 @@
 import React from "react";
-import ImageCanvas from "./_imageCanvas";
+import {ImageCanvas, DefaultMemeTemplates} from "./_imageCanvas";
 
 interface HomeProps {}
 interface HomeState {
@@ -20,13 +20,7 @@ class Home extends React.Component<HomeProps, HomeState> {
     }
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    // console.log("Home componentDidUpdate");
-    // console.log(prevProps);
-    // console.log(prevState);
-    // console.log(snapshot);
-    // console.log(this.state);
-  }
+  // pickTemplate()
 
   render(): JSX.Element {
     return (
@@ -34,16 +28,16 @@ class Home extends React.Component<HomeProps, HomeState> {
         {/* <h1>Overlay text on canvas image and save as base64</h1> */}
         <div className="page-wrap">
           <div className="controls">
-            {/* <input className="controls__input" type="file" id="imageLoader" name="imageLoader" />
-            <label className="controls__label" htmlFor="name">First, choose an image.</label> */}
-            {/* <hr></hr> */}
             <p>I like Sophie and memes</p>
             {/* <p>Parent element: {this.state.parentText}</p> */}
             {/* {this.state.image} */}
+            <input type="radio" id="mtf" name="template" value="mtf" />
+            <label htmlFor="mtf">mtf</label>
+            <input type="radio" id="ftm" name="template" value="ftm" />
+            <label htmlFor="ftm">ftm</label>
           </div>
           <div id="canvas-wrap">
-            {/* <DynamicImageCanvas image={this.state.image} width={400} height={400} text={this.state.parentText} /> */}
-            <ImageCanvas image={this.state.image} width={720} height={695}/>
+            <ImageCanvas {...DefaultMemeTemplates[1]}/>
           </div>
         </div>
       </div>
