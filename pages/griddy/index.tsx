@@ -1,5 +1,5 @@
 import React from "react";
-import { GridCanvas } from "./_gridCanvas";
+import { GridControl } from "./_gridCanvas";
 
 type HomeProps = Record<string, never>;
 interface HomeState {
@@ -57,7 +57,7 @@ class Griddy extends React.Component<HomeProps, HomeState> {
               />
             </div>
           </div>
-          <GridCanvas
+          <GridControl
             rows={this.state.numRows}
             columns={this.state.numColumns}
             cellHeight={200}

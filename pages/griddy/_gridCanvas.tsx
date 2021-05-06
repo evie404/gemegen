@@ -1,7 +1,8 @@
+// eslint-disable-next-line max-classes-per-file
 import React from "react";
 import Cell from "./_cell";
 
-interface GridCanvasProps {
+interface GridProps {
   rows: number;
   columns: number;
 
@@ -9,21 +10,119 @@ interface GridCanvasProps {
   cellWidth: number;
 }
 
-interface GridCanvasState {
-  rows: number;
-  columns: number;
-
-  cellHeight: number;
-  cellWidth: number;
+interface Coordinates {
+  row: number;
+  column: number;
+}
+interface GridControlState extends GridProps {
+  activeCell: Coordinates;
 }
 
-export class GridCanvas extends React.Component<
-  GridCanvasProps,
-  GridCanvasState
-> {
+type GridCanvasState = GridProps;
+
+export class GridControl extends React.Component<GridProps, GridControlState> {
+  constructor(props: GridProps) {
+    super(props);
+
+    this.state = {
+      ...props,
+      activeCell: {
+        row: -1,
+        column: -1,
+      },
+    };
+  }
+
+  static getDerivedStateFromProps(props: GridProps) {
+    return {
+      rows: props.rows,
+      columns: props.columns,
+    };
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot): void {
+    console.log("GridControl componentDidUpdate");
+    console.log(prevProps);
+    console.log("prevState");
+    console.log(prevState);
+    console.log(snapshot);
+    console.log("this.state");
+    console.log(this.state);
+  }
+
+  render(): JSX.Element {
+    const elements = [];
+
+    for (let i = 0; i < this.state.rows; i += 1) {
+      for (let j = 0; j < this.state.columns; j += 1) {
+        const classes = ["cell"];
+
+        if (
+          this.state.activeCell.row === i &&
+          this.state.activeCell.column === j
+        ) {
+          classes.push("active");
+          console.log(classes);
+        }
+
+        elements.push(
+          // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
+          <div
+            className={classes.join(" ")}
+            style={{
+              width: this.state.cellWidth,
+              height: this.state.cellHeight,
+              position: "absolute",
+              marginTop: i * this.state.cellHeight,
+              marginLeft: j * this.state.cellWidth,
+            }}
+            // role="switch"
+            onClick={() => {
+              this.setState((prevState) => {
+                if (
+                  prevState.activeCell.row === i &&
+                  prevState.activeCell.column === j
+                ) {
+                  return {
+                    activeCell: {
+                      row: -1,
+                      column: -1,
+                    },
+                  };
+                }
+
+                return {
+                  activeCell: {
+                    row: i,
+                    column: j,
+                  },
+                };
+              });
+              console.log("click");
+            }}
+            key={`cell-${i}-${j}`}
+          >
+            <p className="cell-controls">text</p>
+          </div>
+        );
+      }
+    }
+
+    return (
+      <div>
+        <div>
+          <div>{elements}</div>
+          <GridCanvas {...this.state} />
+        </div>
+      </div>
+    );
+  }
+}
+
+export class GridCanvas extends React.Component<GridProps, GridCanvasState> {
   canvasRef: React.MutableRefObject<HTMLCanvasElement>;
 
-  constructor(props: GridCanvasProps) {
+  constructor(props: GridProps) {
     super(props);
 
     this.state = {
@@ -33,7 +132,7 @@ export class GridCanvas extends React.Component<
     this.canvasRef = React.createRef();
   }
 
-  static getDerivedStateFromProps(props: GridCanvasProps) {
+  static getDerivedStateFromProps(props: GridProps) {
     return {
       rows: props.rows,
       columns: props.columns,
@@ -45,17 +144,7 @@ export class GridCanvas extends React.Component<
     this.drawGrid();
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot): void {
-    // console.log("GridCanvas componentDidUpdate");
-    // console.log("prevProps");
-    // console.log(prevProps);
-    // console.log("prevState");
-    // console.log(prevState);
-    // console.log("snapshot");
-    // console.log(snapshot);
-    // console.log("this.state");
-    // console.log(this.state);
-
+  componentDidUpdate(): void {
     this.drawGrid();
   }
 
@@ -78,51 +167,16 @@ export class GridCanvas extends React.Component<
         );
       }
     }
-
-    // DrawOverlay(ctx, this.imageRef.current, this.state.width, this.state.height);
-
-    // this.state.textBoxes.forEach((ea) => {
-    //   ctx.fillStyle = "black"; // TODO: pick color
-    //   ctx.textBaseline = 'middle';
-    //   ctx.font = "50px 'Montserrat'";
-
-    //   ea.text.split("\n").forEach((line: string, index: number) => {
-    //     ctx.fillText(line, ea.offsetX, ea.offsetY + index * 50);
-    //   });
-    // })
   }
 
   render(): JSX.Element {
-    const elements = [];
-
-    for (let i = 0; i < this.state.rows; i += 1) {
-      for (let j = 0; j < this.state.columns; j += 1) {
-        elements.push(
-          <Cell
-            cellHeight={this.state.cellHeight}
-            cellWidth={this.state.cellWidth}
-            row={i}
-            column={j}
-            key={`cell-${i}-${j}`}
-          />
-        );
-      }
-    }
-
     return (
-      <div>
-        <div>
-          <div>{elements}</div>
-
-          <canvas
-            style={{ display: "block" }}
-            width={this.state.cellWidth * this.state.columns}
-            height={this.state.cellHeight * this.state.rows}
-            ref={this.canvasRef}
-          />
-          <div />
-        </div>
-      </div>
+      <canvas
+        style={{ display: "block" }}
+        width={this.state.cellWidth * this.state.columns}
+        height={this.state.cellHeight * this.state.rows}
+        ref={this.canvasRef}
+      />
     );
   }
 }
