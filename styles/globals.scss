@@ -54,9 +54,15 @@ canvas {
 }
 
 .cell {
+  background: none;
+
   .cell-controls {
     display: none;
     color: black;
+  }
+
+  &.active {
+    background: black;
   }
 
   &:hover {
