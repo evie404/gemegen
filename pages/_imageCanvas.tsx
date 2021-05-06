@@ -6,29 +6,30 @@ function DrawOverlay(ctx: CanvasRenderingContext2D, img: CanvasImageSource, widt
     ctx.fillRect(0, 0, width, height);
 }
 
-function DrawText(ctx: CanvasRenderingContext2D, text: string) {
-    ctx.fillStyle = "white";
-    ctx.textBaseline = 'middle';
-    ctx.font = "50px 'Montserrat'";
-    ctx.fillText(text, 50, 50);
-}
 
 interface ImageCanvasProps {
   image: React.DetailedHTMLProps<React.ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement>;
   width: number;
   height: number;
-  text: string;
   imageSrc: string;
+  textBoxes: TextBox[];
 }
 
 interface ImageCanvasState {
   image: React.DetailedHTMLProps<React.ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement>;
   width: number;
   height: number;
-  text: string;
   imageSrc: string;
+  textBoxes: TextBox[];
 
   canvasRef?: React.MutableRefObject<HTMLCanvasElement>;
+}
+
+interface TextBox {
+  text: string;
+  offsetX: number;
+  offsetY: number;
+  // TODO: color
 }
 
 class ImageCanvas extends React.Component<ImageCanvasProps, ImageCanvasState> {
@@ -42,7 +43,15 @@ class ImageCanvas extends React.Component<ImageCanvasProps, ImageCanvasState> {
       image: props.image,
       width: 720, // TODO: dynamic size from image
       height: 695,
-      text: "",
+      textBoxes: [{
+        text: "topText",
+        offsetX: 300,
+        offsetY: 0,
+      },{
+        text: "bottomText",
+        offsetX: 300,
+        offsetY: 400,
+      }],
       imageSrc: "/2srcf5.jpg",
     };
 
@@ -55,7 +64,7 @@ class ImageCanvas extends React.Component<ImageCanvasProps, ImageCanvasState> {
       image: props.image,
       width: props.width,
       height: props.height,
-      text: props.text,
+      textBoxes: props.textBoxes,
     });
 }
 
@@ -74,8 +83,14 @@ class ImageCanvas extends React.Component<ImageCanvasProps, ImageCanvasState> {
     const ctx = this.canvasRef.current.getContext('2d');
     ctx.clearRect(0, 0, this.state.width, this.state.height);
     DrawOverlay(ctx, this.imageRef.current, this.state.width, this.state.height);
-    DrawText(ctx, this.state.text);
-    ctx.fillText(this.state.text, 50, 50);
+
+    this.state.textBoxes.forEach((ea) => {
+      ctx.fillStyle = "pink";
+      ctx.textBaseline = 'middle';
+      ctx.font = "50px 'Montserrat'";
+      ctx.fillText(ea.text, ea.offsetX, ea.offsetY);
+    })
+
   }
 
   componentDidMount() {
