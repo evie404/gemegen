@@ -1,4 +1,5 @@
 import React from "react";
+import Cell from "./_cell";
 
 interface GridCanvasProps {
   rows: number;
@@ -40,21 +41,25 @@ export class GridCanvas extends React.Component<
     };
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    console.log("GridCanvas componentDidUpdate");
-    console.log("prevProps");
-    console.log(prevProps);
-    console.log("prevState");
-    console.log(prevState);
-    console.log("snapshot");
-    console.log(snapshot);
-    console.log("this.state");
-    console.log(this.state);
+  componentDidMount(): void {
+    this.drawGrid();
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot): void {
+    // console.log("GridCanvas componentDidUpdate");
+    // console.log("prevProps");
+    // console.log(prevProps);
+    // console.log("prevState");
+    // console.log(prevState);
+    // console.log("snapshot");
+    // console.log(snapshot);
+    // console.log("this.state");
+    // console.log(this.state);
 
     this.drawGrid();
   }
 
-  drawGrid() {
+  drawGrid(): void {
     const ctx = this.canvasRef.current.getContext("2d");
 
     const width = this.state.cellWidth * this.state.columns;
@@ -62,9 +67,9 @@ export class GridCanvas extends React.Component<
 
     ctx.clearRect(0, 0, width, height);
 
-    for (let i = 0; i < this.state.rows; i++) {
-      for (let j = 0; j < this.state.columns; j++) {
-        ctx.fillStyle = "rgba(255, 255, 255, " + Math.random() + ")";
+    for (let i = 0; i < this.state.rows; i += 1) {
+      for (let j = 0; j < this.state.columns; j += 1) {
+        ctx.fillStyle = `rgba(255, 255, 255, ${Math.random()})`;
         ctx.fillRect(
           i * this.state.cellWidth,
           j * this.state.cellHeight,
@@ -87,22 +92,18 @@ export class GridCanvas extends React.Component<
     // })
   }
 
-  componentDidMount() {
-    this.drawGrid();
-  }
-
   render(): JSX.Element {
     const elements = [];
 
-    for (let i = 0; i < this.state.rows; i++) {
-      for (let j = 0; j < this.state.columns; j++) {
+    for (let i = 0; i < this.state.rows; i += 1) {
+      for (let j = 0; j < this.state.columns; j += 1) {
         elements.push(
           <Cell
             cellHeight={this.state.cellHeight}
             cellWidth={this.state.cellWidth}
             row={i}
             column={j}
-            key={"cell-" + i + "-" + j}
+            key={`cell-${i}-${j}`}
           />
         );
       }
@@ -119,50 +120,11 @@ export class GridCanvas extends React.Component<
             height={this.state.cellHeight * this.state.rows}
             ref={this.canvasRef}
           />
-          <div></div>
+          <div />
         </div>
       </div>
     );
   }
 }
 
-interface CellProps {
-  row: number;
-  column: number;
-
-  cellHeight: number;
-  cellWidth: number;
-}
-
-interface CellState {
-  row: number;
-  column: number;
-
-  cellHeight: number;
-  cellWidth: number;
-}
-
-export class Cell extends React.Component<CellProps, CellState> {
-  constructor(props: CellProps) {
-    super(props);
-
-    this.state = { ...props }; // TODO: fix this
-  }
-
-  render(): JSX.Element {
-    return (
-      <div
-        className="cell"
-        style={{
-          width: this.state.cellWidth,
-          height: this.state.cellHeight,
-          position: "absolute",
-          marginTop: this.state.row * this.state.cellHeight,
-          marginLeft: this.state.column * this.state.cellWidth,
-        }}
-      >
-        <p className="cell-controls">text</p>
-      </div>
-    );
-  }
-}
+export default GridCanvas;

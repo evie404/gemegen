@@ -1,7 +1,7 @@
 import React from "react";
 import { ImageCanvas, DefaultMemeTemplates } from "./_imageCanvas";
 
-interface HomeProps {}
+type HomeProps = Record<string, never>;
 interface HomeState {
   templateIndex: number;
 }
@@ -29,40 +29,36 @@ class Home extends React.Component<HomeProps, HomeState> {
             <p>I like Sophie and memes</p>
             {/* <p>Parent element: {this.state.parentText}</p> */}
             {/* {this.state.image} */}
-            {DefaultMemeTemplates.map((ea, index) => {
-              return (
-                <div key={"meme-selector-" + index}>
-                  <input
-                    type="radio"
-                    id={ea.name}
-                    name="template"
-                    value={index}
-                    onChange={(e) => {
-                      console.log(e.target.value);
-                      this.setState({
-                        templateIndex: parseInt(e.target.value),
-                      });
-                    }}
-                  />
-                  <label htmlFor={ea.name}>{ea.name}</label>
-                </div>
-              );
-            })}
+            {DefaultMemeTemplates.map((ea, index) => (
+              <div key={`meme-selector-${ea.name}`}>
+                <input
+                  type="radio"
+                  id={ea.name}
+                  name="template"
+                  value={index}
+                  onChange={(e) => {
+                    // console.log(e.target.value);
+                    this.setState({
+                      templateIndex: parseInt(e.target.value, 10),
+                    });
+                  }}
+                />
+                <label htmlFor={ea.name}>{ea.name}</label>
+              </div>
+            ))}
           </div>
           <div id="canvas-wrap">
-            {DefaultMemeTemplates.map((ea, index) => {
-              return (
-                <div
-                  style={{
-                    display:
-                      this.state.templateIndex === index ? "block" : "none",
-                  }}
-                  key={"image-canvas-container-" + index}
-                >
-                  <ImageCanvas {...ea} />
-                </div>
-              );
-            })}
+            {DefaultMemeTemplates.map((ea, index) => (
+              <div
+                style={{
+                  display:
+                    this.state.templateIndex === index ? "block" : "none",
+                }}
+                key={`image-canvas-container-${ea.name}`}
+              >
+                <ImageCanvas {...ea} />
+              </div>
+            ))}
           </div>
         </div>
       </div>

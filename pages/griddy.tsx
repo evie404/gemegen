@@ -1,7 +1,7 @@
 import React from "react";
 import { GridCanvas } from "./_gridCanvas";
 
-interface HomeProps {}
+type HomeProps = Record<string, never>;
 interface HomeState {
   numRows: number;
   numColumns: number;
@@ -31,6 +31,7 @@ class Griddy extends React.Component<HomeProps, HomeState> {
           <div className="controls">
             <p>I like Sophie and memes</p>
             <div>
+              {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
               <label htmlFor="numRows">Rows</label>
               <input
                 type="number"
@@ -38,10 +39,11 @@ class Griddy extends React.Component<HomeProps, HomeState> {
                 name="numRows"
                 defaultValue={this.state.numRows}
                 onChange={(e) => {
-                  console.log(e.target.value);
-                  this.setState({ numRows: parseInt(e.target.value) });
+                  // console.log(e.target.value);
+                  this.setState({ numRows: parseInt(e.target.value, 10) });
                 }}
               />
+              {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
               <label htmlFor="numColumns">Columns</label>
               <input
                 type="number"
@@ -49,8 +51,8 @@ class Griddy extends React.Component<HomeProps, HomeState> {
                 name="numColumns"
                 defaultValue={this.state.numColumns}
                 onChange={(e) => {
-                  console.log(e.target.value);
-                  this.setState({ numColumns: parseInt(e.target.value) });
+                  // console.log(e.target.value);
+                  this.setState({ numColumns: parseInt(e.target.value, 10) });
                 }}
               />
             </div>

@@ -11,9 +11,9 @@ function DrawOverlay(
   ctx.fillRect(0, 0, width, height);
 }
 
-interface ImageCanvasProps extends MemeTemplate {}
+type ImageCanvasProps = MemeTemplate;
 
-interface ImageCanvasState extends MemeTemplate {}
+type ImageCanvasState = MemeTemplate;
 
 interface TextBox {
   text: string;
@@ -95,6 +95,7 @@ export class ImageCanvas extends React.Component<
   ImageCanvasState
 > {
   canvasRef: React.MutableRefObject<HTMLCanvasElement>;
+
   imageRef: React.MutableRefObject<HTMLImageElement>;
 
   constructor(props: ImageCanvasProps) {
@@ -106,26 +107,30 @@ export class ImageCanvas extends React.Component<
     this.imageRef = React.createRef();
   }
 
-  static getDerivedStateFromProps(props: ImageCanvasProps) {
+  static getDerivedStateFromProps(props: ImageCanvasProps): any {
     return {
       width: props.width,
       height: props.height,
     };
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    console.log("ImageCanvas componentDidUpdate");
+  componentDidMount(): void {
+    this.drawText();
+  }
+
+  componentDidUpdate(): void {
+    // console.log("ImageCanvas componentDidUpdate");
     // console.log(prevProps);
-    console.log("prevState");
-    console.log(prevState);
+    // console.log("prevState");
+    // console.log(prevState);
     // console.log(snapshot);
-    console.log("this.state");
-    console.log(this.state);
+    // console.log("this.state");
+    // console.log(this.state);
 
     this.drawText();
   }
 
-  drawText() {
+  drawText(): void {
     const ctx = this.canvasRef.current.getContext("2d");
     ctx.clearRect(0, 0, this.state.width, this.state.height);
     DrawOverlay(
@@ -146,60 +151,56 @@ export class ImageCanvas extends React.Component<
     });
   }
 
-  componentDidMount() {
-    this.drawText();
-  }
-
   render(): JSX.Element {
     return (
       <div>
         <div>
-          {this.state.textBoxes.map((value: TextBox, index: number) => {
-            return (
-              <div key={"text-box-control-" + index}>
-                {/* <label className="controls__label" htmlFor="name">Overlay Text</label> */}
-                <textarea
-                  className="controls__input"
-                  // id="name"
-                  // type="text"
-                  defaultValue={value.text}
-                  onChange={(e) => {
-                    const textBoxes = this.state.textBoxes;
-                    textBoxes[index].text = e.target.value;
-                    this.setState({ textBoxes: textBoxes });
-                  }}
-                />
-                <input
-                  className="controls__input"
-                  // id="name"
-                  type="number"
-                  defaultValue={value.offsetX}
-                  onChange={(e) => {
-                    const textBoxes = this.state.textBoxes;
-                    textBoxes[index].offsetX = parseInt(e.target.value);
-                    this.setState({ textBoxes: textBoxes });
-                  }}
-                />
-                <input
-                  className="controls__input"
-                  // id="name"
-                  type="number"
-                  defaultValue={value.offsetY}
-                  onChange={(e) => {
-                    const textBoxes = this.state.textBoxes;
-                    textBoxes[index].offsetY = parseInt(e.target.value);
-                    this.setState({ textBoxes: textBoxes });
-                  }}
-                />
-              </div>
-            );
-          })}
+          {this.state.textBoxes.map((value: TextBox, index: number) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <div key={`text-box-control-${index}`}>
+              {/* <label className="controls__label" htmlFor="name">Overlay Text</label> */}
+              <textarea
+                className="controls__input"
+                // id="name"
+                // type="text"
+                defaultValue={value.text}
+                onChange={(e) => {
+                  const { textBoxes } = this.state;
+                  textBoxes[index].text = e.target.value;
+                  this.setState({ textBoxes });
+                }}
+              />
+              <input
+                className="controls__input"
+                // id="name"
+                type="number"
+                defaultValue={value.offsetX}
+                onChange={(e) => {
+                  const { textBoxes } = this.state;
+                  textBoxes[index].offsetX = parseInt(e.target.value, 10);
+                  this.setState({ textBoxes });
+                }}
+              />
+              <input
+                className="controls__input"
+                // id="name"
+                type="number"
+                defaultValue={value.offsetY}
+                onChange={(e) => {
+                  const { textBoxes } = this.state;
+                  textBoxes[index].offsetY = parseInt(e.target.value, 10);
+                  this.setState({ textBoxes });
+                }}
+              />
+            </div>
+          ))}
         </div>
         <div>
           <img
             src={this.state.imageSrc}
             ref={this.imageRef}
             style={{ display: "none" }}
+            alt=""
           />
           <canvas
             style={{ display: "block" }}

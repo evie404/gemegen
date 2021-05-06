@@ -1,5 +1,4 @@
 interface Custom404Props {
-  menuKey?: string[] | string;
   title?: string;
   message?: string;
 }
