@@ -52,3 +52,16 @@ canvas {
 #canvasID {
   z-index: 9999;
 }
+
+.cell {
+  .cell-controls {
+    display: none;
+    color: black;
+  }
+
+  &:hover {
+    .cell-controls {
+      display: block;
+    }
+  }
+}

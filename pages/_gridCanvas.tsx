@@ -147,16 +147,19 @@ export class Cell extends React.Component<CellProps, CellState> {
 
   render(): JSX.Element {
     return (
-      <div style={
+      <div className="cell" style={
         {
-          backgroundColor: 'red',
-          width: this.state.cellWidth / 2,
-          height: this.state.cellHeight / 2,
+          width: this.state.cellWidth,
+          height: this.state.cellHeight,
           position: 'absolute',
           marginTop: this.state.row * this.state.cellHeight,
           marginLeft: this.state.column * this.state.cellWidth,
         }}>
+        <p className="cell-controls">
+          text
+        </p>
       </div>
+
     )
   }
 }
