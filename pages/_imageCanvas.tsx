@@ -37,11 +37,25 @@ const defaultMemeTemplates = [
       offsetX: 450,
       offsetY: 175,
     },{
-      text: "DA",
+      text: "MTF",
       offsetX: 450,
       offsetY: 525,
     }],
     imageSrc: "/2srcf5.jpg",
+  },
+  {
+    width: 720, // TODO: dynamic size from image
+    height: 695,
+    textBoxes: [{
+      text: "NYET",
+      offsetX: 450,
+      offsetY: 175,
+    },{
+      text: "FTM",
+      offsetX: 450,
+      offsetY: 525,
+    }],
+    imageSrc: "/3hxd77.png",
   }
 ]
 
@@ -52,7 +66,7 @@ class ImageCanvas extends React.Component<ImageCanvasProps, ImageCanvasState> {
   constructor(props: ImageCanvasProps) {
     super(props);
 
-    this.state = defaultMemeTemplates[0];
+    this.state = defaultMemeTemplates[1];
 
     this.canvasRef = React.createRef();
     this.imageRef = React.createRef();
