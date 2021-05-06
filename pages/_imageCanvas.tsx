@@ -19,6 +19,8 @@ interface TextBox {
 }
 
 export interface MemeTemplate {
+  name: string
+
   imageSrc: string
   textBoxes: TextBox[]
 
@@ -30,6 +32,7 @@ export interface MemeTemplate {
 
 export const DefaultMemeTemplates = [
   {
+    name: "MTF",
     width: 720, // TODO: dynamic size from image
     height: 695,
     textBoxes: [{
@@ -44,6 +47,7 @@ export const DefaultMemeTemplates = [
     imageSrc: "/2srcf5.jpg",
   },
   {
+    name: "FTM",
     width: 720, // TODO: dynamic size from image
     height: 695,
     textBoxes: [{
@@ -58,6 +62,7 @@ export const DefaultMemeTemplates = [
     imageSrc: "/3hxd77.png",
   },
   {
+    name: "MTFwat",
     width: 720, // TODO: dynamic size from image
     height: 695,
     textBoxes: [{
@@ -97,9 +102,11 @@ export class ImageCanvas extends React.Component<ImageCanvasProps, ImageCanvasSt
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     console.log("ImageCanvas componentDidUpdate");
-    console.log(prevProps);
+    // console.log(prevProps);
+    console.log("prevState");
     console.log(prevState);
-    console.log(snapshot);
+    // console.log(snapshot);
+    console.log("this.state");
     console.log(this.state);
 
     this.drawText();

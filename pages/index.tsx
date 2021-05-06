@@ -3,8 +3,7 @@ import {ImageCanvas, DefaultMemeTemplates} from "./_imageCanvas";
 
 interface HomeProps {}
 interface HomeState {
-  image: React.DetailedHTMLProps<React.ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement>;
-  parentText: string,
+  templateIndex: number;
 }
 
 // templates -> image, [text positions]
@@ -15,8 +14,7 @@ class Home extends React.Component<HomeProps, HomeState> {
     super(props);
 
     this.state = {
-      image: <img src="/2srcf5.jpg" />,
-      parentText: 'text',
+      templateIndex: 0,
     }
   }
 
@@ -31,13 +29,33 @@ class Home extends React.Component<HomeProps, HomeState> {
             <p>I like Sophie and memes</p>
             {/* <p>Parent element: {this.state.parentText}</p> */}
             {/* {this.state.image} */}
-            <input type="radio" id="mtf" name="template" value="mtf" />
-            <label htmlFor="mtf">mtf</label>
-            <input type="radio" id="ftm" name="template" value="ftm" />
-            <label htmlFor="ftm">ftm</label>
+            {
+              DefaultMemeTemplates.map((ea, index) => {
+                return (
+                  <div>
+                    <input type="radio" id={ea.name} name="template" value={index}
+                      onChange={(e) => {
+                        console.log(e.target.value)
+                              this.setState({ templateIndex: parseInt(e.target.value) });
+                      }}
+                    />
+                    <label htmlFor={ea.name}>{ea.name}</label>
+                  </div>
+                )
+              })
+            }
+
           </div>
           <div id="canvas-wrap">
-            <ImageCanvas {...DefaultMemeTemplates[1]}/>
+            {
+              DefaultMemeTemplates.map((ea, index) => {
+                return (
+                  <div style={{ display: this.state.templateIndex === index ? 'block' : 'none' }}>
+                    <ImageCanvas {...ea} />
+                  </div>
+                )
+              })
+            }
           </div>
         </div>
       </div>
