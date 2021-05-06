@@ -106,20 +106,17 @@ class ImageCanvas extends React.Component<ImageCanvasProps, ImageCanvasState> {
               return (
                 <div>
                   <input
-                      className="controls__input"
-                      id="name"
-                      type="text"
-                      // defaultValue={this.state.}
-                  onChange={(e) => {
-                    const textBoxes = this.state.textBoxes;
-                    textBoxes[index].text = e.target.value
-                        // console.log(e)
-                        // console.log(e.target)
-                        // console.log(e.target.value)
-                        this.setState({ textBoxes: textBoxes })
-                      }}
-                    />
-                <label className="controls__label" htmlFor="name">Overlay Text</label>
+                    className="controls__input"
+                    id="name"
+                    type="text"
+                    defaultValue={value.text}
+                    onChange={(e) => {
+                      const textBoxes = this.state.textBoxes;
+                      textBoxes[index].text = e.target.value;
+                      this.setState({ textBoxes: textBoxes });
+                    }}
+                  />
+                  <label className="controls__label" htmlFor="name">Overlay Text</label>
                 </div>
               )
             })
