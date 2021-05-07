@@ -1,3 +1,10 @@
+import { rules } from "eslint-plugin-jsx-a11y";
+
+const a11yOff = Object.keys(rules).reduce((acc, rule) => {
+  acc[`jsx-a11y/${rule}`] = "off";
+  return acc;
+}, {});
+
 module.exports = {
   env: {
     browser: true,
@@ -28,6 +35,7 @@ module.exports = {
     "plugin:jest/all",
   ],
   rules: {
+    ...a11yOff,
     "react/jsx-filename-extension": [1, { extensions: [".ts", ".tsx"] }],
     "import/extensions": "off",
     "react/prop-types": "off",

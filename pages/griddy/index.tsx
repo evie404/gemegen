@@ -31,7 +31,6 @@ class Griddy extends React.Component<HomeProps, HomeState> {
           <div className="controls">
             <p>I like Sophie and memes</p>
             <div>
-              {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
               <label htmlFor="numRows">Rows</label>
               <input
                 type="number"
@@ -43,7 +42,6 @@ class Griddy extends React.Component<HomeProps, HomeState> {
                   this.setState({ numRows: parseInt(e.target.value, 10) });
                 }}
               />
-              {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
               <label htmlFor="numColumns">Columns</label>
               <input
                 type="number"
