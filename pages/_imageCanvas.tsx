@@ -214,4 +214,4 @@ export class ImageCanvas extends React.Component<
   }
 }
 
-// export default ImageCanvas;
+export default ImageCanvas;
