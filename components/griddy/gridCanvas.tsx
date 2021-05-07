@@ -1,6 +1,5 @@
 // eslint-disable-next-line max-classes-per-file
 import React from "react";
-import Cell from "./_cell";
 
 interface GridProps extends CellDimensions {
   rows: number;

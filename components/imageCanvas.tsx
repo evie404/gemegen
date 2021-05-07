@@ -1,5 +1,5 @@
 import React from "react";
-import { MemeTemplate, TextBox } from "./_memeTemplate";
+import { MemeTemplate, TextBox } from "./memeTemplate";
 
 function DrawOverlay(
   ctx: CanvasRenderingContext2D,

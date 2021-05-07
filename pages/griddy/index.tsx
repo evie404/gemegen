@@ -1,5 +1,5 @@
 import React from "react";
-import { GridControl } from "./_gridCanvas";
+import { GridControl } from "../../components/griddy/gridCanvas";
 
 type HomeProps = Record<string, never>;
 interface HomeState {
