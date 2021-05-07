@@ -15,7 +15,7 @@ class Griddy extends React.Component<HomeProps, HomeState> {
     super(props);
 
     this.state = {
-      numRows: 3,
+      numRows: 2,
       numColumns: 2,
     };
   }

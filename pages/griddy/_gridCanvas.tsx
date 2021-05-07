@@ -122,8 +122,13 @@ export class GridControl extends React.Component<GridProps, GridControlState> {
       // for every row, fill until desired number of columns is reached
       for (let j = cells[i].length; j < props.columns; j += 1) {
         if (j === 0) {
+          let content = "/images/fn.png";
+          if (i === props.rows - 1) {
+            // first column last row is yes image
+            content = "/images/fy.png";
+          }
           cells[i].push({
-            content: "/images/fn.png",
+            content: content,
             contentType: "image",
           });
         } else {
