@@ -70,40 +70,49 @@ export class GridControl extends React.Component<GridProps, GridControlState> {
   constructor(props: GridProps) {
     super(props);
 
-    const cells: CellContent[][] = [];
-
-    for (let i = 0; i < this.props.rows; i += 1) {
-      cells.push([]);
-
-      for (let j = 0; j < this.props.columns - 1; j += 1) {
-        cells[i].push({
-          content: "/images/fn.png",
-          contentType: "image",
-        });
-      }
-
-      cells[i].push({
-        content: "someText",
-        contentType: "text",
-      });
-    }
-
-    cells[this.props.rows - 1][0].content = "/images/fy.png";
-
     this.state = {
       ...props,
       activeCell: {
         row: -1,
         column: -1,
       },
-      cells: cells,
+      cells: [],
     };
   }
 
-  static getDerivedStateFromProps(props: GridProps) {
+  static getDerivedStateFromProps(props: GridProps, state: GridControlState) {
+    // console.log("GridControl getDerivedStateFromProps");
+    // console.log(props);
+    // console.log(state);
+
+    const cells: CellContent[][] = state.cells;
+
+    // ensure every row is initialized
+    for (let i = cells.length; i < props.rows; i += 1) {
+      cells.push([]);
+    }
+
+    for (let i = 0; i < props.rows; i += 1) {
+      // for every row, fill until desired number of columns is reached
+      for (let j = cells[i].length; j < props.columns; j += 1) {
+        if (j === 0) {
+          cells[i].push({
+            content: "/images/fn.png",
+            contentType: "image",
+          });
+        } else {
+          cells[i].push({
+            content: "someText",
+            contentType: "text",
+          });
+        }
+      }
+    }
+
     return {
       rows: props.rows,
       columns: props.columns,
+      cells: cells,
     };
   }
 
