@@ -77,7 +77,7 @@ export class GridControl extends React.Component<GridProps, GridControlState> {
 
       for (let j = 0; j < this.props.columns - 1; j += 1) {
         cells[i].push({
-          content: "/2srcf5.jpg",
+          content: "/images/fn.png",
           contentType: "image",
         });
       }
@@ -87,6 +87,8 @@ export class GridControl extends React.Component<GridProps, GridControlState> {
         contentType: "text",
       });
     }
+
+    cells[this.props.rows - 1][0].content = "/images/fy.png";
 
     this.state = {
       ...props,
