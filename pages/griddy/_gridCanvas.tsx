@@ -5,8 +5,6 @@ import Cell from "./_cell";
 interface GridProps extends CellDimensions {
   rows: number;
   columns: number;
-
-  cells: CellContent[][];
 }
 
 interface CellDimensions {
@@ -20,6 +18,7 @@ interface Coordinates {
 }
 interface GridControlState extends GridProps {
   activeCell: Coordinates;
+  cells: CellContent[][];
 }
 
 type GridCanvasState = GridProps;
