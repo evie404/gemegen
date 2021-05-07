@@ -2,10 +2,14 @@
 import React from "react";
 import Cell from "./_cell";
 
-interface GridProps {
+interface GridProps extends CellDimensions {
   rows: number;
   columns: number;
 
+  cells: CellContent[][];
+}
+
+interface CellDimensions {
   cellHeight: number;
   cellWidth: number;
 }
@@ -20,9 +24,70 @@ interface GridControlState extends GridProps {
 
 type GridCanvasState = GridProps;
 
+interface CellCanvasProps extends CellDimensions, CellContent {}
+
+interface CellContent {
+  contentType: "image" | "text";
+  content: string;
+}
+
+class CellCanvas extends React.Component<CellCanvasProps, CellCanvasProps> {
+  constructor(props: CellCanvasProps) {
+    super(props);
+
+    this.state = {
+      ...props,
+    };
+  }
+
+  render(): JSX.Element {
+    if (this.state.contentType === "image") {
+      return (
+        <img
+          src={this.state.content}
+          alt={this.state.content}
+          style={{
+            width: this.state.cellWidth,
+            height: this.state.cellHeight,
+          }}
+        />
+      );
+    }
+
+    return (
+      <div
+        style={{
+          width: this.state.cellWidth,
+          height: this.state.cellHeight,
+        }}
+      >
+        {this.state.content}
+      </div>
+    );
+  }
+}
+
 export class GridControl extends React.Component<GridProps, GridControlState> {
   constructor(props: GridProps) {
     super(props);
+
+    const cells: CellContent[][] = [];
+
+    for (let i = 0; i < this.props.rows; i += 1) {
+      cells.push([]);
+
+      for (let j = 0; j < this.props.columns - 1; j += 1) {
+        cells[i].push({
+          content: "/2srcf5.jpg",
+          contentType: "image",
+        });
+      }
+
+      cells[i].push({
+        content: "someText",
+        contentType: "text",
+      });
+    }
 
     this.state = {
       ...props,
@@ -30,6 +95,7 @@ export class GridControl extends React.Component<GridProps, GridControlState> {
         row: -1,
         column: -1,
       },
+      cells: cells,
     };
   }
 
@@ -41,17 +107,17 @@ export class GridControl extends React.Component<GridProps, GridControlState> {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot): void {
-    console.log("GridControl componentDidUpdate");
-    console.log(prevProps);
-    console.log("prevState");
-    console.log(prevState);
-    console.log(snapshot);
-    console.log("this.state");
-    console.log(this.state);
+    // console.log("GridControl componentDidUpdate");
+    // console.log(prevProps);
+    // console.log("prevState");
+    // console.log(prevState);
+    // console.log(snapshot);
+    // console.log("this.state");
+    // console.log(this.state);
   }
 
   render(): JSX.Element {
-    const elements = [];
+    const controlElements = [];
 
     for (let i = 0; i < this.state.rows; i += 1) {
       for (let j = 0; j < this.state.columns; j += 1) {
@@ -65,10 +131,8 @@ export class GridControl extends React.Component<GridProps, GridControlState> {
           console.log(classes);
         }
 
-        elements.push(
-          // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
+        controlElements.push(
           <div
-            className={classes.join(" ")}
             style={{
               width: this.state.cellWidth,
               height: this.state.cellHeight,
@@ -76,33 +140,40 @@ export class GridControl extends React.Component<GridProps, GridControlState> {
               marginTop: i * this.state.cellHeight,
               marginLeft: j * this.state.cellWidth,
             }}
-            // role="switch"
-            onClick={() => {
-              this.setState((prevState) => {
-                if (
-                  prevState.activeCell.row === i &&
-                  prevState.activeCell.column === j
-                ) {
-                  return {
-                    activeCell: {
-                      row: -1,
-                      column: -1,
-                    },
-                  };
-                }
-
-                return {
-                  activeCell: {
-                    row: i,
-                    column: j,
-                  },
-                };
-              });
-              console.log("click");
-            }}
             key={`cell-${i}-${j}`}
           >
-            <p className="cell-controls">text</p>
+            <div
+              className={classes.join(" ")}
+              style={{
+                width: "100%",
+                height: "100%",
+                position: "absolute",
+              }}
+              onClick={() => {
+                this.setState((prevState) => {
+                  if (
+                    prevState.activeCell.row === i &&
+                    prevState.activeCell.column === j
+                  ) {
+                    return {
+                      activeCell: {
+                        row: -1,
+                        column: -1,
+                      },
+                    };
+                  }
+
+                  return {
+                    activeCell: {
+                      row: i,
+                      column: j,
+                    },
+                  };
+                });
+                console.log("click");
+              }}
+            />
+            <CellCanvas {...this.state} {...this.state.cells[i][j]} />
           </div>
         );
       }
@@ -111,7 +182,7 @@ export class GridControl extends React.Component<GridProps, GridControlState> {
     return (
       <div>
         <div>
-          <div>{elements}</div>
+          <div>{controlElements}</div>
           <GridCanvas {...this.state} />
         </div>
       </div>
