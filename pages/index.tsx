@@ -1,5 +1,6 @@
 import React from "react";
-import { ImageCanvas, DefaultMemeTemplates } from "./_imageCanvas";
+import { ImageCanvas } from "./_imageCanvas";
+import { DefaultMemeTemplates } from "./_memeTemplate";
 
 type HomeProps = Record<string, never>;
 interface HomeState {
