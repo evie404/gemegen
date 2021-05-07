@@ -19,6 +19,7 @@ interface Coordinates {
 interface GridControlState extends GridProps {
   activeCell: Coordinates;
   cells: CellContent[][];
+  textInput: string;
 }
 
 type GridCanvasState = GridProps;
@@ -39,6 +40,29 @@ class CellCanvas extends React.Component<CellCanvasProps, CellCanvasProps> {
     };
   }
 
+  static getDerivedStateFromProps(
+    props: CellCanvasProps,
+    state: CellCanvasProps
+  ) {
+    // console.log("CellCanvas getDerivedStateFromProps");
+    // console.log("props");
+    // console.log(props);
+    // console.log("state");
+    // console.log(state);
+
+    return props;
+  }
+
+  // componentDidUpdate(prevProps, prevState, snapshot): void {
+  //   console.log("CellCanvas componentDidUpdate");
+  //   // console.log(prevProps);
+  //   // console.log("prevState");
+  //   // console.log(prevState);
+  //   // // console.log(snapshot);
+  //   console.log("this.state");
+  //   console.log(this.state);
+  // }
+
   render(): JSX.Element {
     if (this.state.contentType === "image") {
       return (
@@ -58,6 +82,7 @@ class CellCanvas extends React.Component<CellCanvasProps, CellCanvasProps> {
         style={{
           width: this.state.cellWidth,
           height: this.state.cellHeight,
+          color: "black",
         }}
       >
         {this.state.content}
@@ -77,6 +102,7 @@ export class GridControl extends React.Component<GridProps, GridControlState> {
         column: -1,
       },
       cells: [],
+      textInput: "",
     };
   }
 
@@ -126,6 +152,16 @@ export class GridControl extends React.Component<GridProps, GridControlState> {
     // console.log(this.state);
   }
 
+  currentlySelectedCell(): CellContent {
+    if (this.state.activeCell.column < 0) {
+      return null;
+    }
+
+    const cells = this.state.cells;
+    const { row, column } = this.state.activeCell;
+    return cells[row][column];
+  }
+
   render(): JSX.Element {
     const controlElements = [];
 
@@ -138,7 +174,7 @@ export class GridControl extends React.Component<GridProps, GridControlState> {
           this.state.activeCell.column === j
         ) {
           classes.push("active");
-          console.log(classes);
+          // console.log(classes);
         }
 
         controlElements.push(
@@ -180,9 +216,11 @@ export class GridControl extends React.Component<GridProps, GridControlState> {
                     },
                   };
                 });
-                console.log("click");
+                // console.log("click");
               }}
             />
+            {/* {console.log("this.state.cells[" + i + "][" + j + "]")}
+            {console.log(this.state.cells[i][j])} */}
             <CellCanvas {...this.state} {...this.state.cells[i][j]} />
           </div>
         );
@@ -191,10 +229,46 @@ export class GridControl extends React.Component<GridProps, GridControlState> {
 
     return (
       <div>
-        <div>
-          <div>{controlElements}</div>
-          <GridCanvas {...this.state} />
-        </div>
+        <table>
+          <tbody>
+            <tr>
+              <td>
+                <div>
+                  <div>{controlElements}</div>
+                  <GridCanvas {...this.state} />
+                </div>
+              </td>
+              <td>
+                <div
+                  style={{
+                    visibility:
+                      this.state.activeCell.column < 0 ? "hidden" : "visible",
+                  }}
+                >
+                  <input
+                    className="controls__input"
+                    // id="name"
+                    type="input"
+                    value={
+                      this.currentlySelectedCell()
+                        ? this.currentlySelectedCell().content
+                        : ""
+                    }
+                    onChange={(e) => {
+                      const cells = this.state.cells;
+                      const { row, column } = this.state.activeCell;
+                      // cells[row][column].contentType = "text";
+                      cells[row][column].content = e.target.value;
+                      // console.log(e.target.value);
+                      // console.log(cells[row][column]);
+                      this.setState({ cells: cells });
+                    }}
+                  />
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     );
   }
