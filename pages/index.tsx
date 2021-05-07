@@ -36,6 +36,7 @@ class Home extends React.Component<HomeProps, HomeState> {
                   id={ea.name}
                   name="template"
                   value={index}
+                  checked={this.state.templateIndex === index}
                   onChange={(e) => {
                     // console.log(e.target.value);
                     this.setState({

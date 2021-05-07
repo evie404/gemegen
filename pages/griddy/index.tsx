@@ -58,8 +58,8 @@ class Griddy extends React.Component<HomeProps, HomeState> {
           <GridControl
             rows={this.state.numRows}
             columns={this.state.numColumns}
-            cellHeight={200}
-            cellWidth={200}
+            cellHeight={250}
+            cellWidth={250}
           />
         </div>
       </div>

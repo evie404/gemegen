@@ -76,7 +76,7 @@ export const DefaultMemeTemplates = [
     height: 695,
     textBoxes: [
       {
-        text: "NYET",
+        text: "DA",
         offsetX: 450,
         offsetY: 175,
       },

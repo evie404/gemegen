@@ -82,6 +82,8 @@ class CellCanvas extends React.Component<CellCanvasProps, CellCanvasProps> {
         style={{
           width: this.state.cellWidth,
           height: this.state.cellHeight,
+          paddingTop: 100,
+          fontSize: 24,
           color: "black",
         }}
       >
@@ -133,7 +135,7 @@ export class GridControl extends React.Component<GridProps, GridControlState> {
           });
         } else {
           cells[i].push({
-            content: "someText",
+            content: "",
             contentType: "text",
           });
         }
@@ -318,7 +320,8 @@ export class GridCanvas extends React.Component<GridProps, GridCanvasState> {
 
     for (let i = 0; i < this.state.rows; i += 1) {
       for (let j = 0; j < this.state.columns; j += 1) {
-        ctx.fillStyle = `rgba(255, 255, 255, ${Math.random()})`;
+        ctx.fillStyle = "white";
+        // ctx.fillStyle = `rgba(255, 255, 255, ${Math.random()})`;
         ctx.fillRect(
           i * this.state.cellWidth,
           j * this.state.cellHeight,
