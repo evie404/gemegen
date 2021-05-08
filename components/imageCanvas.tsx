@@ -1,16 +1,6 @@
 import React from "react";
 import { MemeTemplate, TextBox } from "./memeTemplate";
-
-function DrawOverlay(
-  ctx: CanvasRenderingContext2D,
-  img: CanvasImageSource,
-  width: number,
-  height: number
-) {
-  ctx.drawImage(img, 0, 0);
-  ctx.fillStyle = "rgba(255, 255, 255, 0)";
-  ctx.fillRect(0, 0, width, height);
-}
+import { drawImage, drawTextLines } from "./canvas/drawHelpers";
 
 type ImageCanvasProps = MemeTemplate;
 
@@ -59,21 +49,10 @@ export class ImageCanvas extends React.Component<
   drawText(): void {
     const ctx = this.canvasRef.current.getContext("2d");
     ctx.clearRect(0, 0, this.state.width, this.state.height);
-    DrawOverlay(
-      ctx,
-      this.imageRef.current,
-      this.state.width,
-      this.state.height
-    );
+    drawImage(ctx, this.imageRef.current, this.state.width, this.state.height);
 
     this.state.textBoxes.forEach((ea) => {
-      ctx.fillStyle = "black"; // TODO: pick color
-      ctx.textBaseline = "middle";
-      ctx.font = "50px 'Montserrat'";
-
-      ea.text.split("\n").forEach((line: string, index: number) => {
-        ctx.fillText(line, ea.offsetX, ea.offsetY + index * 50);
-      });
+      drawTextLines(ctx, ea.text, ea.offsetX, ea.offsetY);
     });
   }
 
