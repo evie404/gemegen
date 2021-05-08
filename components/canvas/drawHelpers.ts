@@ -4,9 +4,7 @@ export function drawImage(
   width: number,
   height: number
 ): void {
-  ctx.drawImage(img, 0, 0);
-  ctx.fillStyle = "rgba(255, 255, 255, 0)";
-  ctx.fillRect(0, 0, width, height);
+  ctx.drawImage(img, 0, 0, width, height);
 }
 
 export function drawTextLines(
